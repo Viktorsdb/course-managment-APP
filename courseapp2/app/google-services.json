@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "214893796374",
+    "project_id": "course-cf98e",
+    "storage_bucket": "course-cf98e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214893796374:android:aaf735447ad4515669a937",
+        "android_client_info": {
+          "package_name": "com.course.manage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCUfgiVB4Oscx4H_iCj-WNd7zwKZBxaks"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

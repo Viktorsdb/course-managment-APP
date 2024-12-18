@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_head"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="50dp"
+                    android:src="@mipmap/ic_launcher" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@android:color/white"
+                        app:cardCornerRadius="22dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="66dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:alpha="0.4"
+                                android:text="username"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/et_username"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="14dp"
+                                android:background="@null"
+                                android:hint="please input username"
+                                android:inputType="text"
+                                android:digits = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@android:color/white"
+                        app:cardCornerRadius="22dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="66dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:alpha="0.4"
+                                android:text="password"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/et_password"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="14dp"
+                                android:background="@null"
+                                android:hint="please input password"
+                                android:inputType="textPassword"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@android:color/white"
+                        app:cardCornerRadius="22dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="66dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:alpha="0.4"
+                                android:text="password"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/et_password_again"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="14dp"
+                                android:background="@null"
+                                android:hint="please input password"
+                                android:inputType="textPassword"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@android:color/white"
+                        app:cardCornerRadius="22dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="66dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:alpha="0.4"
+                                android:text="email"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/et_email"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="14dp"
+                                android:background="@null"
+                                android:hint="please input email"
+                                android:inputType="text"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@android:color/white"
+                        app:cardCornerRadius="22dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:layout_width="66dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginBottom="12dp"
+                                android:alpha="0.4"
+                                android:text="mobile"
+                                android:textColor="@color/black"
+                                android:textSize="14sp" />
+
+                            <EditText
+                                android:id="@+id/et_mobile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="14dp"
+                                android:background="@null"
+                                android:hint="please input mobile"
+                                android:inputType="text"
+                                android:textColor="@android:color/black"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <RadioGroup
+                        android:id="@+id/rg_type"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:layout_marginBottom="30dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rb_student"
+                            android:text="Student"
+                            android:checked="true"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"/>
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/rb_teacher"
+                            android:text="Teacher"
+                            android:layout_width="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"/>
+                    </RadioGroup>
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginEnd="30dp"
+                    app:cardCornerRadius="2dp">
+
+                    <Button
+                        android:id="@+id/btn_login"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:background="@drawable/shape_bg"
+                        android:gravity="center"
+                        android:text="register"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="25dp"
+        android:src="@drawable/ic_baseline_arrow_back_24" />
+
+
+</RelativeLayout>

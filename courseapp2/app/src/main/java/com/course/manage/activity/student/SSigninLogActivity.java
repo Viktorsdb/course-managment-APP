@@ -1,0 +1,192 @@
+package com.course.manage.activity.student;
+
+import android.Manifest;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.View;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.course.manage.App;
+import com.course.manage.R;
+import com.course.manage.activity.MyActivity;
+import com.course.manage.activity.QrScanActivity;
+import com.course.manage.activity.teacher.SigninQrActivity;
+import com.course.manage.databinding.ActivitySigninLogBinding;
+import com.course.manage.databinding.ActivityStudentSigninLogBinding;
+import com.course.manage.model.SignIn;
+import com.course.manage.utils.Base64ImageUtils;
+import com.course.manage.utils.HttpUtils;
+import com.course.manage.utils.LogUtils;
+import com.gyf.immersionbar.ImmersionBar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.xutils.http.RequestParams;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+import cn.bingoogolapple.baseadapter.BGARecyclerViewAdapter;
+import cn.bingoogolapple.baseadapter.BGAViewHolderHelper;
+import cn.bingoogolapple.refreshlayout.BGARefreshLayout;
+import cn.bingoogolapple.refreshlayout.BGAStickinessRefreshViewHolder;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
+public class SSigninLogActivity extends AppCompatActivity implements BGARefreshLayout.BGARefreshLayoutDelegate {
+    private ActivityStudentSigninLogBinding binding;
+    private RecyclerView recyclerView;
+    private BGARefreshLayout mRefreshLayout;
+    private BGARecyclerViewAdapter bgaRefreshLayoutAdapter;
+
+    public static final int RC_CAMERA = 10000;
+    private ActivityResultLauncher signinLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (ActivityResultCallback<ActivityResult>) result -> {
+        if (result.getResultCode() == RESULT_OK){
+            int courseId = result.getData().getIntExtra("course_id", -1);
+            LogUtils.e("courseId:"+courseId+"");
+            signin(courseId);
+        }
+    });
+
+    public void signin(int courseId){
+        RequestParams requestParams = new RequestParams(HttpUtils.studentSignIn+"?token="+App.token);
+        requestParams.addParameter("course_id",courseId);
+        HttpUtils.post(requestParams, new HttpUtils.HttpCallack() {
+            @Override
+            public void onSuccess(String result) throws JSONException {
+                mRefreshLayout.beginRefreshing();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ImmersionBar.with(this)
+                .statusBarDarkFont(true)
+                .fitsSystemWindows(true)
+                .statusBarColor(R.color.gray)
+                .init();
+        binding = ActivityStudentSigninLogBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        recyclerView = binding.recycler;
+        mRefreshLayout = binding.rlModulenameRefresh;
+        initRefreshLayout();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        bgaRefreshLayoutAdapter = new BGARecyclerViewAdapter<SignIn>(recyclerView, R.layout.item_signin_log) {
+            @Override
+            protected void fillData(BGAViewHolderHelper helper, int position, SignIn model) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                helper.getTextView(R.id.tv_student_name).setText(model.getStudentName());
+                helper.getTextView(R.id.tv_course_name).setText(model.getCourseName());
+                helper.getTextView(R.id.tv_time).setText(sdf.format(new Date(model.getCreatetime()*1000)));
+            }
+        };
+        recyclerView.setAdapter(bgaRefreshLayoutAdapter);
+
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        binding.ivQrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                camera();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mRefreshLayout.beginRefreshing();
+    }
+
+    @AfterPermissionGranted(RC_CAMERA)
+    private void camera() {
+        String[] perms = {Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+            signinLauncher.launch(new Intent(SSigninLogActivity.this, QrScanActivity.class));
+        } else {
+            EasyPermissions.requestPermissions(this, "scan qrcode requires the following permissions::\n\n1. Access camera on your device", RC_CAMERA, perms);
+        }
+    }
+    private void initRefreshLayout() {
+        // 为BGARefreshLayout 设置代理
+        mRefreshLayout.setDelegate(this);
+        // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
+        BGAStickinessRefreshViewHolder refreshViewHolder = new BGAStickinessRefreshViewHolder(this,true);
+        refreshViewHolder.setRotateImage(R.mipmap.ic_launcher);
+        refreshViewHolder.setStickinessColor(R.color.purple_200);
+        // 设置下拉刷新和上拉加载更多的风格
+        mRefreshLayout.setRefreshViewHolder(refreshViewHolder);
+        // 为了增加下拉刷新头部和加载更多的通用性，提供了以下可选配置选项  -------------START
+        // 设置正在加载更多时不显示加载更多控件
+        // mRefreshLayout.setIsShowLoadingMoreView(false);
+        // 设置正在加载更多时的文本
+        refreshViewHolder.setLoadingMoreText("loading");
+    }
+    @Override
+    public void onBGARefreshLayoutBeginRefreshing(BGARefreshLayout refreshLayout) {
+        RequestParams requestParams = new RequestParams(HttpUtils.studentSignInList+"?token="+ App.token);
+        HttpUtils.post(requestParams, new HttpUtils.HttpCallack() {
+            @Override
+            public void onSuccess(String result) throws JSONException {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONArray data = jsonObject.optJSONArray("data");
+                if (data!=null&&data.length()>0){
+                    ArrayList<SignIn> signinArray = new ArrayList<>();
+                    for (int i = 0; i < data.length(); i++) {
+                        JSONObject item = data.optJSONObject(i);
+                        SignIn signIn = new SignIn();
+                        signIn.setId(item.optInt("id"));
+                        signIn.setTeacherId(item.optInt("teacher_id"));
+                        signIn.setCourseId(item.optInt("course_id"));
+                        signIn.setStudentId(item.optInt("student_id"));
+                        signIn.setCreatetime(item.optLong("createtime"));
+                        signIn.setCourseName(item.optString("course_name"));
+                        signIn.setStudentName(item.optString("student_name"));
+                        signIn.setSignintime(item.optLong("signintime"));
+                        signinArray.add(signIn);
+                    }
+                    bgaRefreshLayoutAdapter.setData(signinArray);
+                }
+                mRefreshLayout.endRefreshing();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                mRefreshLayout.endRefreshing();
+            }
+        });
+    }
+
+    @Override
+    public boolean onBGARefreshLayoutBeginLoadingMore(BGARefreshLayout refreshLayout) {
+        return false;
+    }
+}
